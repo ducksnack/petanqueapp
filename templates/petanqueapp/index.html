@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Petanque - Samsø mesterskabet</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Samsømesterskaberne i Petanque</h1>
+    <div class="" id="leaderboard-container">
+      {% if tournament %}
+        <table>
+          <thead>
+            <tr>
+              <th>Spiller</th>
+              <th>Vundet</th>
+              <th>Point</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in players %}
+              <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ p.match_points }}</td>
+                <td>{{ p.total_points }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% if scheduled_matches %}
+          <table>
+            {% for m in scheduled_matches %}
+              <form class="" action="/" method="post">{% csrf_token %}
+                <tr>
+                  <td>{{ m.player1 }}</td>
+                  <td><input type="number" name="player1score" value="" id="player1score"></td>
+                  <td>{{ m.player2 }}</td>
+                  <td><input type="number" name="player2score" value=""></td>
+                  <td>{{ m.player3 }}</td>
+                  <td><input type="number" name="player3score" value=""></td>
+                  <td><input type="submit" id="button submit-match-{{ m.id }}-button" name="submit-button" value="{{ m.id }}"></input></td>
+                </tr>
+              </form>
+            {% endfor %}
+          </table>
+        {% endif %}
+
+        {% if finished_matches %}
+          <table>
+            {% for m in finished_matches %}
+            <tr>
+              <td>{{ m.player1 }}</td>
+              <td>{{ m.player1score }}</td>
+              <td>{{ m.player2 }}</td>
+              <td>{{ m.player2score }}</td>
+              <td>{{ m.player3 }}</td>
+              <td>{{ m.player3score }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% if end_of_round %}
+    <form class="" action="" method="post">{% csrf_token %}
+      <input type="submit" name="Næste Runde" value="Næste Runde">
+    </form>
+    {% endif %}
+
+
+  </body>
+</html>
