@@ -245,4 +245,22 @@ ujson
 unicodecsv==0.14.1
 urllib3
 watchdog
-wcwidth ace 
+wcwidth
+webencodings==0.5.1
+Werkzeug
+whitenoise==6.2.0
+widgetsnbextension==3.5.1
+win-inet-pton
+win-unicode-console==0.5
+wincertstore==0.2
+wrapt==1.12.1
+xlrd
+XlsxWriter
+xlwings==0.23.0
+xlwt==1.3.0
+xmltodict==0.12.0
+yapf
+zict==2.0.0
+zipp
+zope.event==4.5.0
+zope.interface
