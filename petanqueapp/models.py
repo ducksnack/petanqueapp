@@ -6,6 +6,7 @@ class Player(models.Model):
     match_points = models.IntegerField(default=0)
     matches_played = models.IntegerField(default=0)
     total_points = models.IntegerField(default=0)
+    opp_score = models.IntegerField(default=0)
     byes = models.IntegerField(default=0)
 
     def __str__(self):
@@ -21,7 +22,8 @@ class Tournament(models.Model):
     def get_leaderboard(self):
         leaderboard = []
         for p in self.get_player_list():
-            leaderboard.append([p, p.match_points, p.total_points])
+            leaderboard.append([p, p.match_points, p.total_points, p.opp_score])
+        leaderboard.sort(key=lambda x:x[3], reverse=True)
         leaderboard.sort(key=lambda x:x[2], reverse=True)
         leaderboard.sort(key=lambda x:x[1], reverse=True)
         leaderboard = [leaderboard[i][0] for i in range(len(leaderboard))]
@@ -80,12 +82,15 @@ class Match(models.Model):
         self.player1score = score1
         self.player1.matches_played += 1
         self.player1.total_points += score1
+        self.player1.opp_score += (score2 + score3)
         self.player2score = score2
         self.player2.matches_played += 1
         self.player2.total_points += score2
+        self.player2.opp_score += (score1 + score3)
         self.player3score = score3
         self.player3.matches_played += 1
         self.player3.total_points += score3
+        self.player3.opp_score += (score1 + score2)
         if score1 > max(score2, score3):
             self.player1.match_points += 1
             self.winner = self.player1.name
